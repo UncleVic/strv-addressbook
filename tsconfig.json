@@ -1,0 +1,39 @@
+{
+  "compileOnSave": true,
+  "include": [
+    "src/**/*"
+  ],
+  "exclude": [
+    "node_modules"
+  ],
+  "compilerOptions": {
+    "baseUrl": ".",
+    "target": "ES2018",
+    "module": "commonjs",
+    "outDir": "./build",
+    "jsx": "react",
+    "strict": true,
+    "noEmitOnError": true,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "allowUnreachableCode": false,
+    "allowUnusedLabels": false,
+    "pretty": true,
+    "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "moduleResolution": "node",
+    "noFallthroughCasesInSwitch": true,
+    "preserveConstEnums": true,
+    "noImplicitReturns": true,
+    "resolveJsonModule": true,
+    "paths": {
+      "/*": [
+        "./*"
+      ]
+    },
+    "typeRoots": [
+      "./src/typings",
+      "./node_modules/@types",
+    ]
+  }
+}
