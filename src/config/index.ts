@@ -1,6 +1,6 @@
 import { Env } from '../lib/env';
 
-export const PORT: number = Env.getInt('APP_PORT');
+export const PORT: number = Env.getInt('PORT');
 export const NODE_ENV: string = Env.getStr('NODE_ENV');
 export const signals = Env.getStr('PROCESS_SIGNALS').split(',');
 export const sslKey: string = Env.getStr('SSL_KEY');
