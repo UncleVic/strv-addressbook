@@ -1,0 +1,262 @@
+openapi: 3.0.0
+info:
+  title: AddressBook
+  version: '1.0'
+  description: Test assignment for STRV
+  contact:
+    name: Viktor Polyakov
+    email: vic.polyakov@gmail.com
+servers:
+  - url: 'https://strv-addressbook-polyakov-vic.herokuapp.com'
+paths:
+  /auth/signup:
+    post:
+      summary: Create New User
+      operationId: post-user
+      responses:
+        '201':
+          $ref: '#/components/responses/User-created'
+        '400':
+          $ref: '#/components/responses/Validate-error'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '422':
+          $ref: '#/components/responses/Conflict'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+            examples:
+              Create User:
+                value:
+                  email: tomash@gmail.com
+                  password: myPassword
+        description: Post the necessary fields for the API to create a new user.
+      description: Create a new user.
+      tags:
+        - Signup user
+    parameters: []
+  /auth/login:
+    post:
+      summary: ''
+      operationId: post-auth-login
+      responses:
+        '200':
+          $ref: '#/components/responses/User-created'
+        '400':
+          $ref: '#/components/responses/Validate-error'
+        '401':
+          $ref: '#/components/responses/Conflict'
+        '422':
+          $ref: '#/components/responses/Conflict'
+      description: Get users token and ID
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      tags:
+        - Login user
+  '/api/v1/addrbooks/{userId}/contacts':
+    parameters:
+      - schema:
+          type: string
+        name: userId
+        in: path
+        required: true
+    post:
+      summary: ''
+      operationId: 'post-api-v1-addressbook-:userId-contacts'
+      responses:
+        '201':
+          $ref: '#/components/responses/Contact-created'
+        '400':
+          $ref: '#/components/responses/Conflict'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Contact'
+      description: Create new contact in Address book
+      tags:
+        - Create new contact
+components:
+  schemas:
+    User:
+      title: User
+      type: object
+      description: ''
+      x-examples:
+        Alice Smith:
+          id: 142
+          firstName: Alice
+          lastName: Smith
+          email: alice.smith@gmail.com
+          dateOfBirth: '1997-10-31'
+          emailVerified: true
+          signUpDate: '2019-08-24'
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+      required:
+        - email
+        - password
+    Contact:
+      title: Contact
+      type: object
+      properties:
+        firstName:
+          type: string
+        lastName:
+          type: string
+        phone:
+          type: string
+        address:
+          type: string
+  responses:
+    User-created:
+      description: Example response
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                type: object
+                properties:
+                  type:
+                    type: string
+                    example: user
+                  id:
+                    type: string
+                    format: uuid
+                  attributes:
+                    type: object
+                    properties:
+                      token:
+                        type: string
+          examples:
+            User created:
+              value:
+                data:
+                  type: user
+                  id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                  attributes:
+                    token: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRvbWFzaEBtYW1hLmlvIiwiaWF0IjoxNjE3NzkyMzk1LCJleHAiOjE2MTc3OTI2MzUsImF1ZCI6IlNUUlYiLCJpc3MiOiJTVFJWIn0.uN8F-Z2_8x5-VmIPogKFAgvvtiMFfdqJKpOVbTNe-hc
+    Conflict:
+      description: Example response
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    status:
+                      type: number
+                    title:
+                      type: string
+                    detail:
+                      type: string
+          examples:
+            User already exists:
+              value:
+                errors:
+                  - status: 409
+                    title: Conflict
+                    detail: User already exists
+    Validate-error:
+      description: Example response
+      content:
+        application/json:
+          schema:
+            description: ''
+            type: object
+            properties:
+              errors:
+                type: array
+                uniqueItems: true
+                minItems: 1
+                items:
+                  required:
+                    - status
+                    - title
+                    - detail
+                  properties:
+                    status:
+                      type: number
+                    title:
+                      type: string
+                      minLength: 1
+                    detail:
+                      type: string
+                      minLength: 1
+                    source:
+                      type: object
+                      properties:
+                        pointer:
+                          type: string
+                          minLength: 1
+                      required:
+                        - pointer
+            required:
+              - errors
+          examples:
+            Email isn't valid:
+              value:
+                errors:
+                  - status: 400
+                    title: Bad request
+                    detail: Not valid email
+                    source:
+                      pointer: email
+    Contact-created:
+      description: Example response
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              type:
+                type: string
+                enum:
+                  - contact
+              id:
+                type: string
+                format: uuid
+              attributes:
+                type: object
+                required:
+                  - links
+                properties:
+                  links:
+                    type: object
+                    required:
+                      - self
+                    properties:
+                      self:
+                        type: string
+                        format: uri
+            required:
+              - type
+              - id
+              - attributes
+          examples:
+            Contact created:
+              value:
+                type: contact
+                id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                attributes:
+                  links:
+                    self: 'http://example.com'
+  parameters: {}
+tags:
+  - name: Create new contact
+  - name: Login user
+  - name: Signup user
