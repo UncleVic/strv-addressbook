@@ -116,6 +116,12 @@ components:
           type: string
         address:
           type: string
+      x-examples:
+        Create new contact:
+          firstName: Tomash
+          lastName: Stroka
+          phone: '+420123456789'
+          address: 'Praha, Stare mnesto, 1'
   responses:
     User-created:
       description: Example response
