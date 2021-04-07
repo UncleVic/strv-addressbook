@@ -56,6 +56,11 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/User'
+            examples:
+              User login:
+                value:
+                  email: tomash@gmail.com
+                  password: myPassword
       tags:
         - Login user
   '/api/v1/addrbooks/{userId}/contacts':
@@ -78,6 +83,13 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/Contact'
+            examples:
+              Create new contact:
+                value:
+                  firstName: Tomash
+                  lastName: Stroka
+                  phone: '+420123456789'
+                  address: 'Praha, Stare mnesto, 1'
       description: Create new contact in Address book
       tags:
         - Create new contact
@@ -88,14 +100,9 @@ components:
       type: object
       description: ''
       x-examples:
-        Alice Smith:
-          id: 142
-          firstName: Alice
-          lastName: Smith
-          email: alice.smith@gmail.com
-          dateOfBirth: '1997-10-31'
-          emailVerified: true
-          signUpDate: '2019-08-24'
+        Create new user:
+          email: tomash@gmail.com
+          password: myStrongPassword
       properties:
         email:
           type: string
