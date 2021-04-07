@@ -11,9 +11,9 @@ const glog = getLog();
 
 const logger: log = (message?: string | undefined, state?: LoggerState | undefined): void => {
   if (state && state.type === 'error') {
-    glog.error(`--- MongoDB: ${message} ---`, { error: new Error(message), state });
+    glog.error(`---- MongoDB: ${message} ----`, { error: new Error(message), state });
   } else {
-    glog.info(`--- MongoDB: ${message} ---`, { state });
+    glog.info(`---- MongoDB: ${message} ----`, { state });
   }
 };
 
