@@ -9,7 +9,7 @@ import jwt from 'jsonwebtoken';
 export class UserController {
   public async createUser(payload: IUser): Promise<TResponse> {
     try {
-      const validateError = this.validatePayload(payload, 409);
+      const validateError = this.validatePayload(payload, 400);
       if (validateError) {
         return validateError;
       }
@@ -35,7 +35,7 @@ export class UserController {
 
   public async loginUser(payload: IUser): Promise<TResponse> {
     try {
-      const validateError = this.validatePayload(payload, 409);
+      const validateError = this.validatePayload(payload, 400);
       if (validateError) {
         return validateError;
       }
@@ -49,10 +49,10 @@ export class UserController {
       if (response) {
         return this.createResponse(user);
       } else {
-        return { errors: [{ status: 401, detail: 'User unauthorized' }] };
+        return { errors: [{ status: 401, title: 'Unauthorized' }] };
       }
     } catch (e) {
-      return { errors: [{ status: 422, detail: e.message }] };
+      return { errors: [{ status: 422, title: 'Unprocessable Entity', detail: e.message }] };
     }
   }
 
@@ -61,9 +61,10 @@ export class UserController {
       const errors = validateUser.errors?.map<TResponseError>(err => {
         return {
           status,
+          title: 'Bad Request',
           detail: err.message,
           source: {
-            parameter: err.instancePath,
+            pointer: err.instancePath,
           },
         };
       });

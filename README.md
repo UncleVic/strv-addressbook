@@ -53,3 +53,6 @@ Please use
 npm start
 ```
 for start the App in production enviroment
+
+## API reference
+API reference can be found in ```reference``` folder. It is in OpenAPI format and you should use related viwers for discovery it.
