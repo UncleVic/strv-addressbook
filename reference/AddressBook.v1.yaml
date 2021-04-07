@@ -21,7 +21,7 @@ paths:
         '409':
           $ref: '#/components/responses/Conflict'
         '422':
-          $ref: '#/components/responses/Conflict'
+          $ref: '#/components/responses/Unprocessable-Entity'
       requestBody:
         content:
           application/json:
@@ -47,9 +47,9 @@ paths:
         '400':
           $ref: '#/components/responses/Validate-error'
         '401':
-          $ref: '#/components/responses/Conflict'
+          $ref: '#/components/responses/Unauthorized'
         '422':
-          $ref: '#/components/responses/Conflict'
+          $ref: '#/components/responses/Unprocessable-Entity'
       description: Get users token and ID
       requestBody:
         content:
@@ -77,7 +77,7 @@ paths:
         '201':
           $ref: '#/components/responses/Contact-created'
         '400':
-          $ref: '#/components/responses/Conflict'
+          $ref: '#/components/responses/Contact-error'
       requestBody:
         content:
           application/json:
@@ -268,6 +268,107 @@ components:
                 attributes:
                   links:
                     self: 'http://example.com'
+    Contact-error:
+      description: Example response
+      content:
+        application/json:
+          schema:
+            description: ''
+            type: object
+            properties:
+              errors:
+                type: array
+                uniqueItems: true
+                minItems: 1
+                items:
+                  required:
+                    - status
+                    - title
+                    - detail
+                  properties:
+                    status:
+                      type: number
+                    title:
+                      type: string
+                      minLength: 1
+                    detail:
+                      type: string
+                      minLength: 1
+            required:
+              - errors
+          examples:
+            Create contact error:
+              value:
+                errors:
+                  - status: 400
+                    title: Bad request
+                    detail: Create contact error
+    Unauthorized:
+      description: Example response
+      content:
+        application/json:
+          schema:
+            description: ''
+            type: object
+            properties:
+              errors:
+                type: array
+                uniqueItems: true
+                minItems: 1
+                items:
+                  type: object
+                  properties:
+                    status:
+                      type: number
+                    title:
+                      type: string
+                      minLength: 1
+                  required:
+                    - status
+                    - title
+            required:
+              - errors
+          examples:
+            User unauthorized:
+              value:
+                errors:
+                  - status: 401
+                    title: Unauthorized
+    Unprocessable-Entity:
+      description: Example response
+      content:
+        application/json:
+          schema:
+            description: ''
+            type: object
+            properties:
+              errors:
+                type: array
+                uniqueItems: true
+                minItems: 1
+                items:
+                  required:
+                    - status
+                    - title
+                    - detail
+                  properties:
+                    status:
+                      type: number
+                    title:
+                      type: string
+                      minLength: 1
+                    detail:
+                      type: string
+                      minLength: 1
+            required:
+              - errors
+          examples:
+            example-1:
+              value:
+                errors:
+                  - status: 422
+                    title: Unprocessable Entity
+                    detail: Can't create record
   parameters: {}
 tags:
   - name: Create new contact
