@@ -363,7 +363,7 @@ components:
             required:
               - errors
           examples:
-            example-1:
+            Save data error:
               value:
                 errors:
                   - status: 422
