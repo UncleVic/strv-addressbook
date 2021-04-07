@@ -4,6 +4,6 @@ new App()
   .start()
   .then()
   .catch(err => {
-    console.log(err.toString());
+    console.log(err);
     process.exit(1);
   });
