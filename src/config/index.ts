@@ -11,5 +11,5 @@ export const saltRound: number = Env.getInt('PASSWORD_SALT_ROUND');
 export const secretOrKey: string = Env.getStr('JWT_SECRET');
 export const issuer: string = Env.getStr('JWT_ISSUER');
 export const audience: string = Env.getStr('JWT_AUDIENCE');
-export const expiresIn: string = Env.getStr('JWT_EXPIRES');
+export const expiresIn: number = Env.getInt('JWT_EXPIRES') * 1000;
 export const firebaseUrl: string = Env.getStr('FIREBASE_URL');
