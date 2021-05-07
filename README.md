@@ -1,4 +1,4 @@
-# strv-addressbook-polyakov-viktor
+# strv-addressbook
 Test assignment for STRV
 ## Build
 After clone git repo you have to build it

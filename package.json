@@ -16,14 +16,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/UncleVic/strv-addressbook-polyakov-viktor.git"
+    "url": "git+https://github.com/UncleVic/strv-addressbook.git"
   },
-  "author": "Viktor Polyakov",
+  "author": "UncleVic",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/UncleVic/strv-addressbook-polyakov-viktor/issues"
+    "url": "https://github.com/UncleVic/strv-addressbook/issues"
   },
-  "homepage": "https://github.com/UncleVic/strv-addressbook-polyakov-viktor#readme",
+  "homepage": "https://github.com/UncleVic/strv-addressbook#readme",
   "devDependencies": {
     "@types/express": "^4.17.11",
     "@types/express-serve-static-core": "^4.17.19",
